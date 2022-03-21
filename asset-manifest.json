@@ -1,11 +1,10 @@
 {
   "files": {
-    "main.css": "/casamento/static/css/main.4fc5788e.css",
+    "main.css": "/casamento/static/css/main.2436fc86.css",
     "main.js": "/casamento/static/js/main.21b6efa5.js",
     "static/js/787.c1112931.chunk.js": "/casamento/static/js/787.c1112931.chunk.js",
     "static/media/history.png": "/casamento/static/media/history.d42d47a6288e696a210f.png",
     "static/media/16.jpeg": "/casamento/static/media/16.93096ab31bd29796016b.jpeg",
-    "static/media/girl.png": "/casamento/static/media/girl.0283cff9291694f1ea72.png",
     "static/media/ballon.jpeg": "/casamento/static/media/ballon.1d54c2a2c5a4923c7d12.jpeg",
     "static/media/15.jpeg": "/casamento/static/media/15.d1c3fc89638c23aad9c9.jpeg",
     "static/media/frame.png": "/casamento/static/media/frame.f48b5a0522eaad6e33ec.png",
@@ -15,6 +14,7 @@
     "static/media/7.jpeg": "/casamento/static/media/7.d0ee2c57b4355162d3c3.jpeg",
     "static/media/wedding.jpeg": "/casamento/static/media/wedding.08d23c30d6f65fcf326d.jpeg",
     "static/media/2011.jpeg": "/casamento/static/media/2011.b64e50829dd732420cbe.jpeg",
+    "static/media/girl.jpeg": "/casamento/static/media/girl.a26df41fd06a999df978.jpeg",
     "static/media/frame-bg.png": "/casamento/static/media/frame-bg.92676cd3d18e66e6d981.png",
     "static/media/22.jpeg": "/casamento/static/media/22.de277441d46315d9c0a3.jpeg",
     "static/media/sold.png": "/casamento/static/media/sold.73bff37eee62d3855ec5.png",
@@ -44,12 +44,12 @@
     "static/media/63.jpeg": "/casamento/static/media/63.c0bc67fab51b7ddf3742.jpeg",
     "static/media/11.jpeg": "/casamento/static/media/11.7ce3482ca4c0818e2388.jpeg",
     "index.html": "/casamento/index.html",
-    "main.4fc5788e.css.map": "/casamento/static/css/main.4fc5788e.css.map",
+    "main.2436fc86.css.map": "/casamento/static/css/main.2436fc86.css.map",
     "main.21b6efa5.js.map": "/casamento/static/js/main.21b6efa5.js.map",
     "787.c1112931.chunk.js.map": "/casamento/static/js/787.c1112931.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4fc5788e.css",
+    "static/css/main.2436fc86.css",
     "static/js/main.21b6efa5.js"
   ]
 }
