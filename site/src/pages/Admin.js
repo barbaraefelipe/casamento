@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import Family from '../components/Family';
 import Gift from '../components/Gift';
 
-const URL = 'https://felipemarts.github.io/my-wedding/';
+const URL = 'https://barbaraefelipe.github.io/casamento/';
 
 export default class Admin extends React.Component {
 

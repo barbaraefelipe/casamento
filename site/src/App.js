@@ -14,7 +14,7 @@ class App extends React.Component {
 
   render() {
     return (<>
-      <BrowserRouter basename="/my-wedding">
+      <BrowserRouter basename="/casamento">
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/gifts' element={<Gifts />} />
