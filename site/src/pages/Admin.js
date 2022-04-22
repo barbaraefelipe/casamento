@@ -14,6 +14,7 @@ export default class Admin extends React.Component {
             gifts: [],
             families: [],
             totalInvits: 0,
+            totalChild: 0,
             totalConfirmed: 0,
             totalGifts: 0,
             totalReceived: 0,
@@ -37,9 +38,11 @@ export default class Admin extends React.Component {
         let gifts = await req.json();
         console.log(gifts, families);
         let totalInvits = 0;
+        let totalChild = 0;
         let totalConfirmed = 0;
         families.forEach(f => {
-            totalInvits += f.invitations.length;
+            totalInvits += f.invitations.filter(i => !i.isChild).length;
+            totalChild += f.invitations.filter(i => i.isChild).length;
             totalConfirmed += f.invitations.filter(i => i.name.length > 0).length;
         })
         let totalGifts = 0;
@@ -54,6 +57,7 @@ export default class Admin extends React.Component {
             families,
             gifts,
             totalInvits,
+            totalChild,
             totalConfirmed,
             totalGifts,
             totalReceived,
@@ -105,6 +109,7 @@ export default class Admin extends React.Component {
                             <th>Total</th>
                             <th></th>
                             <th>{this.state.totalInvits}</th>
+                            <th>{this.state.totalChild}</th>
                             <th>{this.state.totalConfirmed}</th>
                             <th></th>
                         </tr>
