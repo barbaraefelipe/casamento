@@ -23,11 +23,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_URL=https://casamento-bf.herokuapp.com/api react-scripts start",
+    "start": "REACT_APP_URL=https://barbaraefelipe.herokuapp.com/api react-scripts start",
     "dev": "REACT_APP_URL=http://localhost/api react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "REACT_APP_URL=https://casamento-bf.herokuapp.com/api react-scripts build",
+    "build": "REACT_APP_URL=https://barbaraefelipe.herokuapp.com/api react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

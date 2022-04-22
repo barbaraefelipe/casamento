@@ -46,7 +46,7 @@ export default class Admin extends React.Component {
         let totalReceived = 0;
         gifts.forEach(g => {
             totalGifts += g.price;
-            if(g.buy) {
+            if (g.buy) {
                 totalReceived += g.price;
             }
         })
@@ -59,6 +59,16 @@ export default class Admin extends React.Component {
             totalReceived,
         })
     }
+
+    copyToClipboard = (key) => {
+        let text = '';
+        text += '👰🏻‍♀️🤵🏻 _Oie, aqui é a Bárbara e o Felipe!_\n\n';
+        text += '💍 _É com muita alegria no coração que nós te convidamos para nossa cerimônia de casamento no dia *11/06/2022 às 15:30* (Véspera dos dias dos namorados). Vai ser um dia muito especial em nossas vidas e gostaríamos que você possa estar presente._\n\n';
+        text += '💌 _Logo abaixo há o link do convite digital, nele você poderá confirmar sua presença. Fizemos esse site com muito carinho para substituir os convites de papel ♻️ e aproveitamos para colocar as orientações._\n\n';
+        text += '❤️ _A medida do amor é amar sem medida_ - Santo Agostinho\n\n';
+        text += `${URL}?key=${key}`;
+        navigator.clipboard.writeText(text);
+    };
 
     render() {
         return (
@@ -77,14 +87,16 @@ export default class Admin extends React.Component {
                             <th>Link</th>
                             <th>Família</th>
                             <th>Convites</th>
+                            <th>Crianças</th>
                             <th>Confirmados</th>
                             <th>Ação</th>
                         </tr></thead>
                         <tbody>
                             {this.state.families.map((f, i) => <tr key={`family-${i}`}>
-                                <td><a href={`${URL}?key=${f.key}`} target="_blank">{`${URL}?key=${f.key}`}</a></td>
+                                <td><Button onClick={() => this.copyToClipboard(f.key)}>Link</Button></td>
                                 <td>{f.name}</td>
-                                <td>{f.invitations.length}</td>
+                                <td>{f.invitations.filter(i => !i.isChild).length}</td>
+                                <td>{f.invitations.filter(i => i.isChild).length}</td>
                                 <td>{f.invitations.filter(i => i.name.length > 0).length}</td>
                                 <td><Button onClick={() => this.family.show(f)}>Ver</Button></td>
                             </tr>)}
