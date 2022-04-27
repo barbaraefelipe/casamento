@@ -170,6 +170,7 @@ export default class Gifts extends React.Component {
                     </h2>
                     <div className='text-center'>
                         <h5>Ficamos pobres depois do casamento, ajuda nois aí 😂😂😂</h5>
+                        <h5>Da até para parcelar em <strong>12x</strong> no cartão 🕺💃</h5>
                     </div>
                     {this.state.gift && <Checkout gift={this.state.gift} />}
                     <div className='p-4'>

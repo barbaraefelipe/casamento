@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Col, Container, Image, Row, Modal, Button } from 'react-bootstrap';
 import Confetti from 'react-confetti';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,10 +10,15 @@ import frame from './../images/frame.png';
 import couple from './../images/history.png';
 
 const Wedding = () => {
+    const [key, setKey] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const currentKey = (new URLSearchParams(window.location.search)).get('key');
+        setKey(currentKey);
+    });
+
     const goToRSVP = () => {
-        const key = (new URLSearchParams(window.location.search)).get('key')
         if (!key) {
             toast.error('Abra o link de convite', {
                 theme: 'colored'
@@ -38,17 +43,23 @@ const Wedding = () => {
             </span>
         </h2>
         <Row className='m-4'>
-            <Col md>
+            {key && <Col md>
                 <div className='name'>
                     <span>🎯 Confirmação de presença</span>
+                </div>
+                <div className='info text-center' style={{ marginBottom: 40 }}>
+                    <span>Clique aqui para confirmar sua presença</span>
                 </div>
                 <div className='text-center'>
                     <Button className='wedding-btn' onClick={goToRSVP}>Confirmar</Button>
                 </div>
-            </Col>
+            </Col>}
             <Col md>
                 <div className='name'>
                     <span>🎁 Lista de Presentes</span>
+                </div>
+                <div className='info text-center' style={{ marginBottom: 40 }}>
+                    <span>Gratidão por nos ajudar a realizar nosso sonho</span>
                 </div>
                 <div className='text-center'>
                     <Link className='btn btn-primary wedding-btn' to="/gifts">Contribuir</Link>
