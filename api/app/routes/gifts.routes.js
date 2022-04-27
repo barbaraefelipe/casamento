@@ -18,6 +18,8 @@ module.exports = app => {
   // Delete a gifts with id
   router.delete("/:id", gifts.delete);
   
+  router.post("/:id/buyer", gifts.updateBuyer);
+
   router.post("/:id/pay", gifts.payByPreferenceId);
   
   app.use("/api/gifts", router);

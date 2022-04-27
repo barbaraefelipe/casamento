@@ -5,6 +5,9 @@ module.exports = mongoose => {
         photo: String,
         preferenceId: String,
         buy: Boolean,
+        buyerName: String,
+        buyerPhone: String,
+        buyerMessage: String,
     }, {
         timestamps: true
     });

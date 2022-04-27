@@ -158,6 +158,34 @@ exports.update = (req, res) => {
     });
 };
 
+// Update Buyer a Gift by the id in the request
+exports.updateBuyer = (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({
+            message: "Data to update can not be empty!"
+        });
+    }
+    const id = req.params.id;
+
+    Gift.findByIdAndUpdate(id, {
+        buyerName: req.body.buyerName,
+        buyerPhone: req.body.buyerPhone,
+        buyerMessage: req.body.buyerMessage,
+    }, {
+        useFindAndModify: false
+    }).then(data => {
+        if (!data) {
+            res.status(404).send({
+                message: `Cannot update Gift with id=${id}. Maybe Gift was not found!`
+            });
+        } else res.send({ message: "Gift was updated successfully." });
+    }).catch(err => {
+        res.status(500).send({
+            message: "Error updating Gift with id=" + id
+        });
+    });
+};
+
 // Delete a Gift with the specified id in the request
 exports.delete = (req, res) => {
     if (checkKey(req, res)) {

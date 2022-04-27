@@ -11,6 +11,9 @@ export default class Gift extends React.Component {
             id: '',
             name: '',
             photo: '',
+            buyerName: '',
+            buyerPhone: '',
+            buyerMessage: '',
             price: 0,
             buy: false,
         };
@@ -45,6 +48,9 @@ export default class Gift extends React.Component {
                 body: JSON.stringify({
                     name: state.name,
                     photo: state.photo,
+                    buyerName: state.buyerName,
+                    buyerPhone: state.buyerPhone,
+                    buyerMessage: state.buyerMessage,
                     price: parseFloat(state.price),
                     buy: state.buy,
                 })
@@ -56,6 +62,9 @@ export default class Gift extends React.Component {
                 body: JSON.stringify({
                     name: state.name,
                     photo: state.photo,
+                    buyerName: state.buyerName,
+                    buyerPhone: state.buyerPhone,
+                    buyerMessage: state.buyerMessage,
                     price: parseFloat(state.price),
                     buy: state.buy,
                 })
@@ -139,6 +148,41 @@ export default class Gift extends React.Component {
                                 checked={this.state.buy}
                                 onChange={this.handleChange} />
                             <label htmlFor='checkbox'>Comprado</label>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <div className="form-group">
+                            <label>Nome do Comprador</label>
+                            <input className="form-control"
+                                type="text"
+                                name="buyerName"
+                                value={this.state.buyerName}
+                                onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label>Telefone do Comprador</label>
+                            <input className="form-control"
+                                type="text"
+                                name="buyerPhone"
+                                value={this.state.buyerPhone}
+                                onChange={this.handleChange} />
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <div className="form-group">
+                            <label>Mensagem</label>
+                            <textarea className="form-control"
+                                type="text"
+                                rows="3"
+                                name="buyerMessage"
+                                value={this.state.buyerMessage}
+                                onChange={this.handleChange} />
                         </div>
                     </div>
                 </div>

@@ -5,14 +5,26 @@ import sold from './../images/sold.png';
 import { useMercadopago } from 'react-sdk-mercadopago';
 
 const Checkout = ({ gift }) => {
-    const [show, setShow] = useState(true);
+    let [show, setShow] = useState(true);
+    let [name, setName] = useState('');
+    let [phone, setPhone] = useState('');
+    let [message, setMessage] = useState('');
+    let [valid, setValid] = useState(false);
+    let [validMessage, setValidMessage] = useState(false);
+
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const mercadopago = useMercadopago.v2('APP_USR-d3bc297e-df02-4b7f-9dd7-96bf901a463d', {
-        locale: 'pt-BR'
+        locale: 'pt-BR',
+        advancedFraudPrevention: false
     });
-    useEffect(() => {
+
+    const handleChange = (value, setValue) => {
+        setValue(value);
+        setValid(name.trim().length > 0 && phone.trim().length > 0);
+    }
+
+    /*useEffect(() => {
         if (mercadopago) {
             mercadopago.checkout({
                 preference: {
@@ -21,10 +33,41 @@ const Checkout = ({ gift }) => {
                 render: {
                     container: '.cho-container',
                     label: 'Comprar',
+                    onsubmit: (event) => {
+                        event.preventDefault();
+                        console.log('CardForm data available: ')
+                    },
+                    callbacks: {
+                        onsubmit: (event) => {
+                            event.preventDefault();
+                            console.log('CardForm data available: ')
+                        },
+                    }
                 }
             })
         }
-    }, [mercadopago])
+    }, [mercadopago]);*/
+
+    const buy = async () => {
+        setValidMessage(false)
+        if (!valid) {
+            setValidMessage(true)
+        } else {
+            let form = {
+                buyerName: name,
+                buyerPhone: phone,
+                buyerMessage: message,
+            }
+            await fetch(`${process.env.REACT_APP_URL}/gifts/${gift.id}/buyer`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            });
+
+            let url = `https://www.mercadopago.com.br/payment-link/v1/redirect?preference-id=${gift.preferenceId}&source=link`
+            window.open(url, "_blank");
+        }
+    }
 
     return (
         <Modal show={show} onHide={handleClose}>
@@ -33,11 +76,44 @@ const Checkout = ({ gift }) => {
             </Modal.Header>
             <Modal.Body>
                 <Card.Img variant='top' src={gift.photo} />
-                <Card.Title>{gift.name}</Card.Title>
-                <Card.Text>Preço: {gift.price.toFixed(2).replace('.', ',')}</Card.Text>
+                <Card.Title className='gift-title'>{gift.name} - {gift.price.toFixed(2).replace('.', ',')} R$</Card.Title>
+                <div className="row mt-2">
+                    <div className="col">
+                        <div className="form-group">
+                            <label>Nome</label>
+                            <input className="form-control"
+                                type="text"
+                                value={name}
+                                onChange={(e) => handleChange(e.target.value, setName)} />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label>Telefone</label>
+                            <input className="form-control"
+                                type="number"
+                                value={phone}
+                                onChange={(e) => handleChange(e.target.value, setPhone)} />
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-2 mb-2">
+                    <div className="col">
+                        <div className="form-group">
+                            <label>Mensagem (Opcional)</label>
+                            <textarea className="form-control"
+                                type="text"
+                                rows="3"
+                                placeholder="Caso queira nos enviar uma mensagem junto ao presente"
+                                value={message}
+                                onChange={(e) => handleChange(e.target.value, setMessage)} />
+                        </div>
+                    </div>
+                </div>
             </Modal.Body>
             <Modal.Footer>
-                <div className="cho-container" />
+                {validMessage && <span className='text-danger'>Preencha os campos</span>}
+                <button className={valid ? "btn btn-info" : "btn btn-outline-info"} onClick={buy}>Comprar</button>
             </Modal.Footer>
         </Modal>
     )
@@ -48,8 +124,8 @@ class GiftCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            conffeti: false
-        };
+            conffeti: false,
+        }
     }
 
     buy = () => {
