@@ -3,28 +3,16 @@ import { Button, Card, Col, Container, Image, Modal, Row, Spinner } from 'react-
 import ConfettiExplosion from 'react-confetti-explosion';
 import sold from './../images/sold.png';
 import { useMercadopago } from 'react-sdk-mercadopago';
+import { toast } from 'react-toastify';
 
-const Checkout = ({ gift }) => {
-    let [show, setShow] = useState(true);
-    let [name, setName] = useState('');
-    let [phone, setPhone] = useState('');
-    let [message, setMessage] = useState('');
-    let [valid, setValid] = useState(false);
-    let [validMessage, setValidMessage] = useState(false);
-
-    const handleClose = () => setShow(false);
+const BuyButton = ({ gift }) => {
 
     const mercadopago = useMercadopago.v2('APP_USR-d3bc297e-df02-4b7f-9dd7-96bf901a463d', {
         locale: 'pt-BR',
         advancedFraudPrevention: false
     });
 
-    const handleChange = (value, setValue) => {
-        setValue(value);
-        setValid(name.trim().length > 0 && phone.trim().length > 0);
-    }
-
-    /*useEffect(() => {
+    useEffect(() => {
         if (mercadopago) {
             mercadopago.checkout({
                 preference: {
@@ -46,7 +34,26 @@ const Checkout = ({ gift }) => {
                 }
             })
         }
-    }, [mercadopago]);*/
+    }, [mercadopago]);
+
+    return (<div className="cho-container"></div>)
+}
+
+const Checkout = ({ gift }) => {
+    let [tab, setTab] = useState(0);
+    let [show, setShow] = useState(true);
+    let [name, setName] = useState('');
+    let [phone, setPhone] = useState('');
+    let [message, setMessage] = useState('');
+    let [valid, setValid] = useState(false);
+    let [validMessage, setValidMessage] = useState(false);
+
+    const handleClose = () => setShow(false);
+
+    const handleChange = (value, setValue) => {
+        setValue(value);
+        setValid(name.trim().length > 0 && phone.trim().length > 0);
+    }
 
     const buy = async () => {
         setValidMessage(false)
@@ -58,14 +65,18 @@ const Checkout = ({ gift }) => {
                 buyerPhone: phone,
                 buyerMessage: message,
             }
-            await fetch(`${process.env.REACT_APP_URL}/gifts/${gift.id}/buyer`, {
+            let req = await fetch(`${process.env.REACT_APP_URL}/gifts/${gift.id}/buyer`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form)
             });
-
-            let url = `https://www.mercadopago.com.br/payment-link/v1/redirect?preference-id=${gift.preferenceId}&source=link`
-            window.open(url, "_blank");
+            if (req.ok) {
+                setTab(1)
+            } else {
+                toast('Erro: ' + req.statusText)
+            }
+            //let url = `https://www.mercadopago.com.br/payment-link/v1/redirect?preference-id=${gift.preferenceId}&source=link`
+            //window.open(url, "_blank");
         }
     }
 
@@ -74,47 +85,57 @@ const Checkout = ({ gift }) => {
             <Modal.Header closeButton>
                 <Modal.Title>🤵🏻 Gratidão por contribuir com nosso casamento 👰🏻</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Card.Img variant='top' src={gift.photo} />
-                <Card.Title className='gift-title'>{gift.name} - {gift.price.toFixed(2).replace('.', ',')} R$</Card.Title>
-                <div className="row mt-2">
-                    <div className="col">
-                        <div className="form-group">
-                            <label>Nome</label>
-                            <input className="form-control"
-                                type="text"
-                                value={name}
-                                onChange={(e) => handleChange(e.target.value, setName)} />
+            {tab === 0 && <>
+                <Modal.Body>
+                    <Card.Img variant='top' src={gift.photo} />
+                    <Card.Title className='gift-title'>{gift.name} - {gift.price.toFixed(2).replace('.', ',')} R$</Card.Title>
+                    <div className="row mt-2">
+                        <div className="col">
+                            <div className="form-group">
+                                <label>Nome</label>
+                                <input className="form-control"
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => handleChange(e.target.value, setName)} />
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="form-group">
+                                <label>Telefone</label>
+                                <input className="form-control"
+                                    type="number"
+                                    value={phone}
+                                    onChange={(e) => handleChange(e.target.value, setPhone)} />
+                            </div>
                         </div>
                     </div>
-                    <div className="col">
-                        <div className="form-group">
-                            <label>Telefone</label>
-                            <input className="form-control"
-                                type="number"
-                                value={phone}
-                                onChange={(e) => handleChange(e.target.value, setPhone)} />
+                    <div className="row mt-2 mb-2">
+                        <div className="col">
+                            <div className="form-group">
+                                <label>Mensagem (Opcional)</label>
+                                <textarea className="form-control"
+                                    type="text"
+                                    rows="3"
+                                    placeholder="Caso queira nos enviar uma mensagem junto ao presente"
+                                    value={message}
+                                    onChange={(e) => handleChange(e.target.value, setMessage)} />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="row mt-2 mb-2">
-                    <div className="col">
-                        <div className="form-group">
-                            <label>Mensagem (Opcional)</label>
-                            <textarea className="form-control"
-                                type="text"
-                                rows="3"
-                                placeholder="Caso queira nos enviar uma mensagem junto ao presente"
-                                value={message}
-                                onChange={(e) => handleChange(e.target.value, setMessage)} />
-                        </div>
-                    </div>
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-                {validMessage && <span className='text-danger'>Preencha os campos</span>}
-                <button className={valid ? "btn btn-info" : "btn btn-outline-info"} onClick={buy}>Comprar</button>
-            </Modal.Footer>
+                </Modal.Body>
+                <Modal.Footer>
+                    {validMessage && <span className='text-danger'>Preencha os campos</span>}
+                    <button className={valid ? "btn btn-info" : "btn btn-outline-info"} onClick={buy}>Avançar</button>
+                </Modal.Footer>
+            </>}
+            {tab === 1 && <>
+                <Modal.Body>
+                    <Card.Title className='gift-title text-center'>Clique em comprar</Card.Title>
+                </Modal.Body>
+                <Modal.Footer>
+                    <BuyButton gift={gift} />
+                </Modal.Footer>
+            </>}
         </Modal>
     )
 }
