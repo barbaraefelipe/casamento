@@ -155,11 +155,21 @@ export default class RSVP extends React.Component {
     load = async () => {
         const key = (new URLSearchParams(window.location.search)).get('key')
         if (!key) {
-            toast.error('key not found');
+            toast.error('key not found', { theme: 'colored' });
         }
-        let req = await fetch(`${process.env.REACT_APP_URL}/families/${key}/confirmation`);
-        let family = await req.json();
-        this.setState(family);
+        try {
+            let req = await fetch(`${process.env.REACT_APP_URL}/families/${key}/confirmation`);
+            let family = await req.json();
+            console.log(family)
+            this.setState(family);
+        } catch (err) {
+            this.setState({ invitations: [] });
+            toast.error('Convite inválido', { theme: 'colored' });
+            toast.error('Convite inválido', { theme: 'colored' });
+            toast.error('Convite inválido', { theme: 'colored' });
+            toast.error('Convite inválido', { theme: 'colored' });
+            toast.error('Convite inválido', { theme: 'colored' });
+        }
     }
 
     render() {

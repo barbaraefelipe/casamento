@@ -130,7 +130,9 @@ const Checkout = ({ gift }) => {
             </>}
             {tab === 1 && <>
                 <Modal.Body>
-                    <Card.Title className='gift-title text-center'>Clique em comprar</Card.Title>
+                    <h5>Pagamento por <strong>PIX</strong> utilize essa chave</h5>
+                    <h5>CPF <strong>034.588.711-52</strong></h5>
+                    <h5><strong>Outras formas de pagamento</strong>, como cartão de crédito, parcelar em até 12 vezes, boleto ou outras formas de pagamento <strong>clique no botão</strong> azul COMPRAR a baixo.</h5>
                 </Modal.Body>
                 <Modal.Footer>
                     <BuyButton gift={gift} />
