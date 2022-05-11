@@ -106,7 +106,7 @@ class EditInvite extends React.Component {
                             <label>Nome</label>
                             <input className="form-control"
                                 type="text"
-                                placeholder="Digite o nome"
+                                placeholder="Digite o nome e sobrenome"
                                 name="name"
                                 value={this.state.name}
                                 onChange={this.handleChange} />
