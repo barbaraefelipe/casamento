@@ -96,6 +96,7 @@ const Info = () => <Container className='pt-4 pb-4'>
                         <li>Também faz frio, não esquecer de levar um casaco elegante ou
                             uma pashmina</li>
                         <li>Treje Fino</li>
+                        <li>Madrinhas estarão vestindo azul serenity</li>
                     </ul>
                 </Card.Body>
             </Card>
@@ -372,15 +373,11 @@ export default class Home extends React.Component {
                             <h2 style={{
                                 fontFamily: 'Amaranth'
                             }}>Bárbara &#38; Felipe</h2>
-                            <Countdown />
                             <h3 className='mt-1'>11/06/2022</h3>
                         </div>
                     </div>
                 </div>
                 <Engaged />
-                <div className='bg-light'>
-                    <Wedding />
-                </div>
                 <Info />
                 <div className='bg-light'>
                     <History />
